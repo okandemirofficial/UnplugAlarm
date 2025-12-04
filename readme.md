@@ -54,7 +54,7 @@ If Unplug Alarm helps you protect your MacBook, you can support the project here
 
 ## Screenshot
 
-![Unplug Alarm macOS app screenshot](./public/ss.png)
+![Unplug Alarm macOS app screenshot](./ss.png)
 
 ---
 
