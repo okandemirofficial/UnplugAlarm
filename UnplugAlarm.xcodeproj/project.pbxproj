@@ -30,9 +30,9 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		D52322702EE1A03C003FE9BC /* Unplug Alarm */ = {
+		D52322702EE1A03C003FE9BC /* UnplugAlarm */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Unplug Alarm";
+			path = UnplugAlarm;
 			sourceTree = "<group>";
 		};
 		D52322822EE1A03D003FE9BC /* UnplugAlarmTests */ = {
@@ -75,7 +75,7 @@
 		D52322652EE1A03C003FE9BC = {
 			isa = PBXGroup;
 			children = (
-				D52322702EE1A03C003FE9BC /* Unplug Alarm */,
+				D52322702EE1A03C003FE9BC /* UnplugAlarm */,
 				D52322822EE1A03D003FE9BC /* UnplugAlarmTests */,
 				D523228C2EE1A03D003FE9BC /* UnplugAlarmUITests */,
 				D523226F2EE1A03C003FE9BC /* Products */,
@@ -108,7 +108,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				D52322702EE1A03C003FE9BC /* Unplug Alarm */,
+				D52322702EE1A03C003FE9BC /* UnplugAlarm */,
 			);
 			name = UnplugAlarm;
 			packageProductDependencies = (
@@ -403,7 +403,6 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Unplug Alarm";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -434,7 +433,6 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Unplug Alarm";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
