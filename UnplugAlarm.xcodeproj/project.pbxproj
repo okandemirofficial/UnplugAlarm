@@ -24,7 +24,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D523226E2EE1A03C003FE9BC /* UnplugAlarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnplugAlarm.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D523226E2EE1A03C003FE9BC /* Unplug Alarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unplug Alarm.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D523227F2EE1A03D003FE9BC /* UnplugAlarmTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnplugAlarmTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D52322892EE1A03D003FE9BC /* UnplugAlarmUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnplugAlarmUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -85,7 +85,7 @@
 		D523226F2EE1A03C003FE9BC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D523226E2EE1A03C003FE9BC /* UnplugAlarm.app */,
+				D523226E2EE1A03C003FE9BC /* Unplug Alarm.app */,
 				D523227F2EE1A03D003FE9BC /* UnplugAlarmTests.xctest */,
 				D52322892EE1A03D003FE9BC /* UnplugAlarmUITests.xctest */,
 			);
@@ -114,7 +114,7 @@
 			packageProductDependencies = (
 			);
 			productName = UnplugAlarm;
-			productReference = D523226E2EE1A03C003FE9BC /* UnplugAlarm.app */;
+			productReference = D523226E2EE1A03C003FE9BC /* Unplug Alarm.app */;
 			productType = "com.apple.product-type.application";
 		};
 		D523227E2EE1A03D003FE9BC /* UnplugAlarmTests */ = {
@@ -410,7 +410,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hexton.UnplugAlarm;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Unplug Alarm";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -440,7 +440,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hexton.UnplugAlarm;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Unplug Alarm";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -460,7 +460,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UnplugAlarm.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/UnplugAlarm";
+				TEST_HOST = "\"$(BUILT_PRODUCTS_DIR)/Unplug Alarm.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Unplug Alarm\"";
 			};
 			name = Debug;
 		};
@@ -477,7 +477,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UnplugAlarm.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/UnplugAlarm";
+				TEST_HOST = "\"$(BUILT_PRODUCTS_DIR)/Unplug Alarm.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Unplug Alarm\"";
 			};
 			name = Release;
 		};

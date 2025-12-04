@@ -1,6 +1,6 @@
 //
 //  AlarmManager.swift
-//  UnplugAlarm
+//  Unplug Alarm
 //
 //  Created by okdemir on 4.12.2025.
 //
@@ -99,7 +99,7 @@ class AlarmManager: ObservableObject {
     private func preventSleep() {
         guard sleepAssertionID == 0 else { return }
 
-        let reason = "UnplugAlarm is playing alarm sound" as CFString
+        let reason = "Unplug Alarm is playing alarm sound" as CFString
         let result = IOPMAssertionCreateWithName(
             kIOPMAssertionTypeNoIdleSleep as CFString,
             IOPMAssertionLevel(kIOPMAssertionLevelOn),

@@ -1,6 +1,6 @@
 //
 //  UnplugAlarmApp.swift
-//  UnplugAlarm
+//  Unplug Alarm
 //
 //  Created by okdemir on 4.12.2025.
 //

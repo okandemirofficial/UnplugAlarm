@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D523226D2EE1A03C003FE9BC"
-               BuildableName = "UnplugAlarm.app"
+               BuildableName = "Unplug Alarm.app"
                BlueprintName = "UnplugAlarm"
                ReferencedContainer = "container:UnplugAlarm.xcodeproj">
             </BuildableReference>
@@ -69,7 +69,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D523226D2EE1A03C003FE9BC"
-            BuildableName = "UnplugAlarm.app"
+            BuildableName = "Unplug Alarm.app"
             BlueprintName = "UnplugAlarm"
             ReferencedContainer = "container:UnplugAlarm.xcodeproj">
          </BuildableReference>
@@ -86,7 +86,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D523226D2EE1A03C003FE9BC"
-            BuildableName = "UnplugAlarm.app"
+            BuildableName = "Unplug Alarm.app"
             BlueprintName = "UnplugAlarm"
             ReferencedContainer = "container:UnplugAlarm.xcodeproj">
          </BuildableReference>
