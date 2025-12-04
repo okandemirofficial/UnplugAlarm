@@ -15,7 +15,7 @@ struct ContentView: View {
     }
 
     var body: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 20) {
             if alarmManager.isActive {
                 // Active state
                 Image(systemName: "lock.shield.fill")
@@ -58,7 +58,7 @@ struct ContentView: View {
                     .font(.system(size: 80))
                     .foregroundStyle(.gray)
 
-                Text("UnplugAlarm")
+                Text("Unplug Alarm")
                     .font(.title)
                     .fontWeight(.semibold)
 
@@ -131,7 +131,8 @@ struct ContentView: View {
 
                 if !canActivate {
                     Text("Select at least one option to activate")
-                        .font(.caption)
+                        .font(.callout)
+                        .fontWeight(.semibold)
                         .foregroundStyle(.secondary)
                 }
             }
@@ -142,9 +143,25 @@ struct ContentView: View {
                     .foregroundStyle(.red)
                     .padding()
             }
+
+            VStack(spacing: 3) {
+                Link(destination: URL(string: "https://buymeacoffee.com/okandemir")!) {
+                    Image("bmc-button")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 40)
+                        .accessibilityLabel("Buy me a coffee")
+                }
+                .buttonStyle(.plain)
+
+                Text("Donate the developer if you liked this app")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
         }
-        .padding(40)
-        .frame(minWidth: 380, minHeight: 450)
+        .padding(.horizontal, 24)
+        .padding(.vertical, 20)
+        .frame(minWidth: 340, minHeight: 450)
     }
 }
 

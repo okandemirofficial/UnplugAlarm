@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleName</key>
-	<string>UnplugAlarm</string>
+	<string>Unplug Alarm</string>
 	<key>CFBundleDisplayName</key>
-	<string>UnplugAlarm</string>
+	<string>Unplug Alarm</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleVersion</key>
@@ -23,8 +23,8 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2025 Hexton. All rights reserved.</string>
 	<key>NSAppleEventsUsageDescription</key>
-	<string>UnplugAlarm needs to control system volume and lock the screen to protect your MacBook.</string>
+	<string>Unplug Alarm needs to control system volume and lock the screen to protect your MacBook.</string>
 	<key>NSSystemAdministrationUsageDescription</key>
-	<string>UnplugAlarm needs administrator access to disable lid sleep for theft protection.</string>
+	<string>Unplug Alarm needs administrator access to disable lid sleep for theft protection.</string>
 </dict>
 </plist>
