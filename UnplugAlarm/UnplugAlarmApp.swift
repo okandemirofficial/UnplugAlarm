@@ -13,5 +13,7 @@ struct UnplugAlarmApp: App {
         WindowGroup {
             ContentView()
         }
+        .windowResizability(.contentSize)
+        .defaultSize(width: 480, height: 620)
     }
 }
