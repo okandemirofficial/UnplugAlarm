@@ -435,19 +435,21 @@ class AlarmManager: ObservableObject {
     }
 
     private func findAlarmSound() -> URL? {
-        // Try system sounds that are loud/alarming
-        let systemSoundPaths = [
-            "/System/Library/Sounds/Sosumi.aiff",
-            "/System/Library/Sounds/Basso.aiff",
-            "/System/Library/Sounds/Funk.aiff",
-            "/System/Library/Sounds/Ping.aiff",
-            "/System/Library/Sounds/Glass.aiff"
+        // First try bundled alarm sound (guaranteed to exist)
+        if let bundledURL = Bundle.main.url(forResource: "Alarm", withExtension: "m4r") {
+            return bundledURL
+        }
+
+        // Fallback to system ringtones if bundled file missing
+        let systemPaths = [
+            "/System/Library/PrivateFrameworks/ToneLibrary.framework/Resources/Ringtones/Alarm.m4r",
+            "/System/Library/PrivateFrameworks/ToneLibrary.framework/Resources/Ringtones/Radar.m4r",
+            "/System/Library/Sounds/Funk.aiff"
         ]
 
-        for path in systemSoundPaths {
-            let url = URL(fileURLWithPath: path)
+        for path in systemPaths {
             if FileManager.default.fileExists(atPath: path) {
-                return url
+                return URL(fileURLWithPath: path)
             }
         }
 
