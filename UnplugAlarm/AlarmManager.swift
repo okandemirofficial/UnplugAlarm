@@ -29,14 +29,50 @@ class AlarmManager: ObservableObject {
     private var beepTimer: Timer?
     private var volumeEnforcerTimer: Timer?
 
+    private var terminationObserver: NSObjectProtocol?
+
     init() {
         wasPluggedIn = isOnACPower()
         wasLidOpen = !isLidClosed()
         checkLidSleepStatus()
+
+        // Register for app termination to restore lid sleep
+        terminationObserver = NotificationCenter.default.addObserver(
+            forName: NSApplication.willTerminateNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.cleanup()
+        }
     }
 
     deinit {
+        if let observer = terminationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+        cleanup()
+    }
+
+    /// Cleanup method to restore system state when quitting
+    private func cleanup() {
         deactivate()
+    }
+
+    /// Restore lid sleep without requiring admin privileges dialog (best effort)
+    private func restoreLidSleep() {
+        // Try to restore lid sleep - this will prompt for admin if needed
+        // but during app termination it may silently fail, which is acceptable
+        let script = """
+        do shell script "pmset -a disablesleep 0" with administrator privileges
+        """
+
+        if let appleScript = NSAppleScript(source: script) {
+            var error: NSDictionary?
+            appleScript.executeAndReturnError(&error)
+            if error == nil {
+                isLidSleepDisabled = false
+            }
+        }
     }
 
     // MARK: - Activation / Deactivation
@@ -58,6 +94,10 @@ class AlarmManager: ObservableObject {
 
         if alarmOnLidClose {
             startLidMonitoring()
+            // Ensure lid sleep is disabled for lid close detection
+            if !isLidSleepDisabled {
+                disableLidSleep()
+            }
         }
 
         // Start monitoring screen state (for unlock detection)
@@ -70,6 +110,12 @@ class AlarmManager: ObservableObject {
         stopPowerMonitoring()
         stopLidMonitoring()
         stopScreenStateMonitoring()
+
+        // Restore lid sleep if it was disabled
+        if isLidSleepDisabled {
+            restoreLidSleep()
+            alarmOnLidClose = false
+        }
     }
 
     // MARK: - Screen Lock
@@ -150,6 +196,10 @@ class AlarmManager: ObservableObject {
                 }
             } else {
                 print("Failed to disable lid sleep: \(String(describing: error))")
+                // Uncheck the checkbox so user can try again
+                DispatchQueue.main.async {
+                    self.alarmOnLidClose = false
+                }
             }
         }
     }

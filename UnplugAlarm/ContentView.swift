@@ -110,6 +110,18 @@ struct ContentView: View {
                         }
                         .padding(.leading, 20)
                     }
+
+                    // Warning when lid close is not enabled
+                    if alarmManager.alarmOnPowerOff && !alarmManager.alarmOnLidClose {
+                        HStack(spacing: 6) {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .foregroundColor(.orange)
+                            Text("Thief can close the alarm by closing lid")
+                                .font(.caption)
+                                .foregroundStyle(.orange)
+                        }
+                        .padding(.top, 4)
+                    }
                 }
                 .padding()
                 .background(Color.gray.opacity(0.1))
