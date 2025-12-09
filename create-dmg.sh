@@ -17,10 +17,18 @@ APP_NAME="Unplug Alarm"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OUTPUT_DMG="${SCRIPT_DIR}/${APP_NAME}.dmg"
 SOURCE_APP="${SCRIPT_DIR}/${APP_NAME}.app"
+# Optional override via DMG_BACKGROUND, else default to repo background.png
+BACKGROUND_IMG="${DMG_BACKGROUND:-${SCRIPT_DIR}/background.png}"
 
 # Verify source app exists
 if [[ ! -d "$SOURCE_APP" ]]; then
     echo "Error: Source app not found at: $SOURCE_APP"
+    exit 1
+fi
+
+# Ensure background image exists
+if [[ ! -f "$BACKGROUND_IMG" ]]; then
+    echo "Error: Background image not found at: $BACKGROUND_IMG"
     exit 1
 fi
 
@@ -38,6 +46,7 @@ create-dmg \
     --window-size 820 520 \
     --window-pos 200 120 \
     --icon-size 128 \
+    --background "$BACKGROUND_IMG" \
     --icon "${APP_NAME}.app" 200 260 \
     --app-drop-link 600 260 \
     --hide-extension "${APP_NAME}.app" \
