@@ -56,6 +56,10 @@ struct ContentView: View {
                                 .foregroundStyle(.green)
                         }
                     }
+                    if settings.voiceWarning {
+                        Label("Voice warning (\(settings.alarmLanguage.nativeName))", systemImage: "checkmark.circle.fill")
+                            .foregroundStyle(.green)
+                    }
                 }
                 .font(.subheadline)
 
@@ -246,6 +250,12 @@ struct ContentView: View {
             .padding(.leading, 20)
             .disabled(!settings.showLockScreenWarning)
 
+            Toggle(isOn: $settings.voiceWarning) {
+                Text("Voice warning when alarm triggers")
+                    .fontWeight(.medium)
+            }
+            .toggleStyle(.checkbox)
+
             VStack(alignment: .leading, spacing: 2) {
                 Picker(selection: $settings.alarmLanguage) {
                     ForEach(AlarmLanguage.allCases) { language in
@@ -257,7 +267,7 @@ struct ContentView: View {
                 }
                 .fixedSize()
 
-                Text("Used for the lock screen text")
+                Text("Used for the lock screen text and the voice warning")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }

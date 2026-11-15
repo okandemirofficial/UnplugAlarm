@@ -32,6 +32,11 @@ class AlarmManager: ObservableObject {
     private let settings = AlarmSettings.shared
     private let wallpaper = WallpaperManager()
     private let audioOutput = AudioOutputManager()
+    private let voice = VoiceAnnouncer()
+    /// Siren plays for this long between spoken warnings.
+    private let sirenPhaseDuration: TimeInterval = 6
+    private var voiceTimer: Timer?
+    private var isSirenPaused = false
     private var isScreenLocked = false
     /// Alarm language captured when the alarm triggers.
     private var alarmLanguage: AlarmLanguage = .english
@@ -500,11 +505,19 @@ class AlarmManager: ObservableObject {
 
         showAlarmWallpaperIfEnabled()
 
+        isSirenPaused = false
         playAlarmSound()
+        if settings.voiceWarning {
+            scheduleVoiceWarning()
+        }
     }
 
     func stopAlarm() {
         isAlarmPlaying = false
+        voiceTimer?.invalidate()
+        voiceTimer = nil
+        voice.stop()
+        isSirenPaused = false
         audioPlayer?.stop()
         audioPlayer = nil
         beepTimer?.invalidate()
@@ -512,6 +525,29 @@ class AlarmManager: ObservableObject {
         volumeEnforcerTimer?.invalidate()
         volumeEnforcerTimer = nil
         allowSleep()
+    }
+
+    // MARK: - Voice Warning
+
+    /// Siren for a few seconds → spoken warning → repeat.
+    private func scheduleVoiceWarning() {
+        voiceTimer?.invalidate()
+        voiceTimer = Timer.scheduledTimer(withTimeInterval: sirenPhaseDuration, repeats: false) { [weak self] _ in
+            self?.speakVoiceWarning()
+        }
+    }
+
+    private func speakVoiceWarning() {
+        guard isAlarmPlaying else { return }
+        isSirenPaused = true
+        audioPlayer?.pause()
+
+        voice.speak(alarmLanguage.text("voice.warning"), language: alarmLanguage) { [weak self] in
+            guard let self, self.isAlarmPlaying else { return }
+            self.isSirenPaused = false
+            self.audioPlayer?.play()
+            self.scheduleVoiceWarning()
+        }
     }
 
     // MARK: - Volume Enforcement
@@ -585,6 +621,7 @@ class AlarmManager: ObservableObject {
                 timer.invalidate()
                 return
             }
+            guard !self.isSirenPaused else { return }
             NSSound.beep()
         }
     }
