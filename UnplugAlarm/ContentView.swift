@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var alarmManager = AlarmManager()
+    @ObservedObject var alarmManager: AlarmManager
     @ObservedObject private var settings = AlarmSettings.shared
     @State private var showHeadphoneAlert = false
     @State private var currentOutputName: String?
@@ -184,6 +184,8 @@ struct ContentView: View {
                         .fontWeight(.semibold)
                         .foregroundStyle(.secondary)
                 }
+
+                resetSection
             }
 
             if alarmManager.isAlarmPlaying {
@@ -217,6 +219,31 @@ struct ContentView: View {
             minHeight: 540,
             idealHeight: 600
         )
+    }
+
+    // MARK: - Reset
+
+    private var resetSection: some View {
+        VStack(spacing: 4) {
+            if alarmManager.hasLeftoverState {
+                HStack(spacing: 6) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundColor(.orange)
+                    Text("Changes from a previous session are still applied")
+                        .font(.caption)
+                        .foregroundStyle(.orange)
+                }
+            }
+
+            Button {
+                alarmManager.resetSystemState()
+            } label: {
+                Label("Reset system state", systemImage: "arrow.counterclockwise")
+                    .font(.callout)
+            }
+            .buttonStyle(.link)
+            .help("Restores the wallpaper, lid sleep and audio output if they were left changed (e.g. after a forced shutdown)")
+        }
     }
 
     // MARK: - Lock screen & alarm settings
@@ -280,5 +307,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView(alarmManager: AlarmManager())
 }

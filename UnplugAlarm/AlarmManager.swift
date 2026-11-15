@@ -13,11 +13,13 @@ import Combine
 import AppKit
 
 class AlarmManager: ObservableObject {
-    @Published var isActive = false
+    @Published var isActive = false { didSet { refreshLeftoverState() } }
     @Published var isAlarmPlaying = false
-    @Published var isLidSleepDisabled = false
+    @Published var isLidSleepDisabled = false { didSet { refreshLeftoverState() } }
     @Published var alarmOnPowerOff = false
-    @Published var alarmOnLidClose = false
+    @Published var alarmOnLidClose = false { didSet { refreshLeftoverState() } }
+    /// Something from a previous session (e.g. a forced shutdown) is still applied.
+    @Published var hasLeftoverState = false
 
     private var audioPlayer: AVAudioPlayer?
     private var powerSourceTimer: Timer?
@@ -50,6 +52,7 @@ class AlarmManager: ObservableObject {
 
         // Restore the original wallpaper if the app quit/crashed while it was replaced
         wallpaper.recoverIfNeeded()
+        refreshLeftoverState()
 
         // Register for app termination to restore lid sleep
         terminationObserver = NotificationCenter.default.addObserver(
@@ -103,6 +106,7 @@ class AlarmManager: ObservableObject {
         showProtectedWallpaperIfEnabled()
         lockScreen()
         isScreenLocked = true
+
         // Keep the alarm on the built-in speakers if the output changes while active
         audioOutput.startMonitoring()
 
@@ -140,6 +144,32 @@ class AlarmManager: ObservableObject {
             restoreLidSleep()
             alarmOnLidClose = false
         }
+    }
+
+    // MARK: - Reset
+
+    /// Puts everything the app may have changed back to normal: stops the alarm,
+    /// restores the wallpaper (or the macOS default if the original is unknown),
+    /// re-enables lid sleep and gives back the audio output. Use when state was
+    /// left behind, e.g. after a forced shutdown while the alarm was active.
+    func resetSystemState() {
+        // Pick up a SleepDisabled left over from a previous session so deactivate() restores it
+        checkLidSleepStatus()
+        // Stops the alarm, releases the sleep assertion, restores audio output,
+        // wallpaper and lid sleep (admin prompt)
+        deactivate()
+        wallpaper.reset()
+        checkLidSleepStatus()
+        refreshLeftoverState()
+    }
+
+    /// Updates `hasLeftoverState`: true if something from a previous session is still applied.
+    func refreshLeftoverState() {
+        hasLeftoverState = !isActive && (
+            (isLidSleepDisabled && !alarmOnLidClose) ||
+            wallpaper.isReplaced ||
+            wallpaper.isShowingGeneratedImage()
+        )
     }
 
     // MARK: - Lock Screen Wallpaper
