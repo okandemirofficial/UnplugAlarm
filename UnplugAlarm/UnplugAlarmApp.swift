@@ -16,7 +16,7 @@ struct UnplugAlarmApp: App {
             ContentView(alarmManager: alarmManager)
         }
         .windowResizability(.contentSize)
-        .defaultSize(width: 480, height: 620)
+        .defaultSize(width: 480, height: 700)
         .commands {
             CommandGroup(after: .appSettings) {
                 Button("Reset System State") {

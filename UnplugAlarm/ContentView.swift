@@ -28,7 +28,7 @@ struct ContentView: View {
     }
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 14) {
             if alarmManager.isActive {
                 // Active state
                 Image(systemName: "lock.shield.fill")
@@ -78,18 +78,22 @@ struct ContentView: View {
                 .padding(.top, 10)
 
             } else {
-                // Inactive state
-                Image(systemName: "lock.shield")
-                    .font(.system(size: 80))
-                    .foregroundStyle(.gray)
+                // Inactive state — compact header so the settings fit on small screens
+                HStack(spacing: 14) {
+                    Image(systemName: "lock.shield")
+                        .font(.system(size: 48))
+                        .foregroundStyle(.gray)
 
-                Text("Unplug Alarm")
-                    .font(.title)
-                    .fontWeight(.semibold)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Unplug Alarm")
+                            .font(.title)
+                            .fontWeight(.semibold)
 
-                Text("Protect your MacBook from theft")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                        Text("Protect your MacBook from theft")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                }
 
                 // Options section
                 VStack(alignment: .leading, spacing: 12) {
@@ -148,6 +152,7 @@ struct ContentView: View {
                         .padding(.top, 4)
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
                 .background(Color.gray.opacity(0.1))
                 .cornerRadius(12)
@@ -159,7 +164,7 @@ struct ContentView: View {
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundColor(.white)
-                        .frame(width: 200, height: 60)
+                        .frame(width: 200, height: 50)
                         .background(canActivate ? Color.blue : Color.gray)
                         .cornerRadius(15)
                 }
@@ -215,10 +220,10 @@ struct ContentView: View {
         .frame(
             minWidth: 420,
             idealWidth: 480,
-            maxWidth: 520,
-            minHeight: 540,
-            idealHeight: 600
+            maxWidth: 520
         )
+        // Window height always follows the content (never clipped)
+        .fixedSize(horizontal: false, vertical: true)
     }
 
     // MARK: - Reset
