@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var alarmManager = AlarmManager()
+    @ObservedObject private var settings = AlarmSettings.shared
     @State private var showHeadphoneAlert = false
     @State private var currentOutputName: String?
 
@@ -46,6 +47,14 @@ struct ContentView: View {
                     if alarmManager.alarmOnLidClose {
                         Label("Lid close detection", systemImage: "checkmark.circle.fill")
                             .foregroundStyle(.green)
+                    }
+                    if settings.showLockScreenWarning {
+                        Label("Lock screen warning", systemImage: "checkmark.circle.fill")
+                            .foregroundStyle(.green)
+                        if settings.effectiveContactNumber != nil {
+                            Label("Contact number on lock screen", systemImage: "checkmark.circle.fill")
+                                .foregroundStyle(.green)
+                        }
                     }
                 }
                 .font(.subheadline)
@@ -139,6 +148,8 @@ struct ContentView: View {
                 .background(Color.gray.opacity(0.1))
                 .cornerRadius(12)
 
+                lockScreenSettings
+
                 Button(action: activateTapped) {
                     Text("Activate")
                         .font(.title2)
@@ -202,6 +213,59 @@ struct ContentView: View {
             minHeight: 540,
             idealHeight: 600
         )
+    }
+
+    // MARK: - Lock screen & alarm settings
+
+    private var lockScreenSettings: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Lock screen & alarm:")
+                .font(.headline)
+                .padding(.bottom, 2)
+
+            Toggle(isOn: $settings.showLockScreenWarning) {
+                Text("Show warning on lock screen")
+                    .fontWeight(.medium)
+            }
+            .toggleStyle(.checkbox)
+
+            HStack(spacing: 8) {
+                Toggle(isOn: $settings.showContactNumber) {
+                    Text("Show contact number")
+                        .fontWeight(.medium)
+                }
+                .toggleStyle(.checkbox)
+
+                TextField(text: $settings.contactNumber) {
+                    Text(verbatim: "+90 5xx xxx xx xx")
+                }
+                .textFieldStyle(.roundedBorder)
+                .frame(maxWidth: 170)
+                .disabled(!settings.showContactNumber)
+            }
+            .padding(.leading, 20)
+            .disabled(!settings.showLockScreenWarning)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Picker(selection: $settings.alarmLanguage) {
+                    ForEach(AlarmLanguage.allCases) { language in
+                        Text(verbatim: language.nativeName).tag(language)
+                    }
+                } label: {
+                    Text("Alarm language:")
+                        .fontWeight(.medium)
+                }
+                .fixedSize()
+
+                Text("Used for the lock screen text")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding()
+        .background(Color.gray.opacity(0.1))
+        .cornerRadius(12)
     }
 }
 

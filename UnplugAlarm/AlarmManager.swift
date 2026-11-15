@@ -29,7 +29,12 @@ class AlarmManager: ObservableObject {
     private var beepTimer: Timer?
     private var volumeEnforcerTimer: Timer?
 
+    private let settings = AlarmSettings.shared
+    private let wallpaper = WallpaperManager()
     private let audioOutput = AudioOutputManager()
+    private var isScreenLocked = false
+    /// Alarm language captured when the alarm triggers.
+    private var alarmLanguage: AlarmLanguage = .english
 
     private var terminationObserver: NSObjectProtocol?
 
@@ -37,6 +42,9 @@ class AlarmManager: ObservableObject {
         wasPluggedIn = isOnACPower()
         wasLidOpen = !isLidClosed()
         checkLidSleepStatus()
+
+        // Restore the original wallpaper if the app quit/crashed while it was replaced
+        wallpaper.recoverIfNeeded()
 
         // Register for app termination to restore lid sleep
         terminationObserver = NotificationCenter.default.addObserver(
@@ -86,9 +94,10 @@ class AlarmManager: ObservableObject {
         wasPluggedIn = isOnACPower()
         wasLidOpen = !isLidClosed()
 
-        // Lock the screen
+        // Show the "protected" notice on the lock screen, then lock
+        showProtectedWallpaperIfEnabled()
         lockScreen()
-
+        isScreenLocked = true
         // Keep the alarm on the built-in speakers if the output changes while active
         audioOutput.startMonitoring()
 
@@ -115,15 +124,34 @@ class AlarmManager: ObservableObject {
         stopPowerMonitoring()
         stopLidMonitoring()
         stopScreenStateMonitoring()
+        isScreenLocked = false
 
         audioOutput.stopMonitoring()
         audioOutput.restoreOriginalOutput()
+        wallpaper.restore()
 
         // Restore lid sleep if it was disabled
         if isLidSleepDisabled {
             restoreLidSleep()
             alarmOnLidClose = false
         }
+    }
+
+    // MARK: - Lock Screen Wallpaper
+
+    private func showProtectedWallpaperIfEnabled() {
+        guard settings.showLockScreenWarning else { return }
+        wallpaper.show(.protected(
+            language: settings.alarmLanguage,
+            contact: settings.effectiveContactNumber,
+            powerTrigger: alarmOnPowerOff,
+            lidTrigger: alarmOnLidClose
+        ))
+    }
+
+    private func showAlarmWallpaperIfEnabled() {
+        guard settings.showLockScreenWarning, isScreenLocked else { return }
+        wallpaper.show(.alarm(language: alarmLanguage, contact: settings.effectiveContactNumber))
     }
 
     // MARK: - Screen Lock
@@ -389,6 +417,16 @@ class AlarmManager: ObservableObject {
         }
         screenStateObservers.append(unlockObserver)
 
+        // Monitor for screen lock (e.g. the user locks again manually while active)
+        let lockObserver = distributedCenter.addObserver(
+            forName: NSNotification.Name("com.apple.screenIsLocked"),
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.onScreenLocked()
+        }
+        screenStateObservers.append(lockObserver)
+
         // Also monitor for session becoming active (user logged back in)
         let sessionObserver = notificationCenter.addObserver(
             forName: NSWorkspace.sessionDidBecomeActiveNotification,
@@ -423,9 +461,24 @@ class AlarmManager: ObservableObject {
         // Screen woke up, but we wait for actual unlock
     }
 
+    private func onScreenLocked() {
+        guard isActive else { return }
+        isScreenLocked = true
+        guard !wallpaper.isReplaced else { return }
+        if isAlarmPlaying {
+            showAlarmWallpaperIfEnabled()
+        } else {
+            showProtectedWallpaperIfEnabled()
+        }
+    }
+
     private func onScreenUnlocked() {
         // User unlocked the screen - stop the alarm
+        isScreenLocked = false
         stopAlarm()
+        // Restore right away, before the user can switch Spaces
+        // (setDesktopImageURL only affects the current Space)
+        wallpaper.restore()
     }
 
     // MARK: - Alarm
@@ -437,12 +490,15 @@ class AlarmManager: ObservableObject {
         preventSleep()
 
         isAlarmPlaying = true
+        alarmLanguage = settings.alarmLanguage
 
         // Make sure the alarm comes out of the speakers, not headphones
         audioOutput.forceBuiltInOutput()
 
         // Force volume to max and keep it there
         startVolumeEnforcer()
+
+        showAlarmWallpaperIfEnabled()
 
         playAlarmSound()
     }
