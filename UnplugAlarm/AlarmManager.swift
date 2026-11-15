@@ -236,8 +236,13 @@ class AlarmManager: ObservableObject {
 
             let data = pipe.fileHandleForReading.readDataToEndOfFile()
             if let output = String(data: data, encoding: .utf8) {
-                // Check if disablesleep is set to 1
-                isLidSleepDisabled = output.contains("disablesleep") && output.contains("1")
+                // `pmset -a disablesleep 1` shows up as "SleepDisabled  1" in `pmset -g`
+                isLidSleepDisabled = output
+                    .split(separator: "\n")
+                    .contains { line in
+                        let parts = line.split(whereSeparator: \.isWhitespace)
+                        return parts.count >= 2 && parts[0] == "SleepDisabled" && parts[1] == "1"
+                    }
             }
         } catch {
             print("Failed to check lid sleep status: \(error)")
