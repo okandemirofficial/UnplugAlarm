@@ -1,0 +1,359 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "ALARM TRIGGERED" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ALARM TETİKLENDİ"
+          }
+        }
+      }
+    },
+    "Activate" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etkinleştir"
+          }
+        }
+      }
+    },
+    "Alarm language:" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarm dili:"
+          }
+        }
+      }
+    },
+    "Alarm triggers:" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarm tetikleyicileri:"
+          }
+        }
+      }
+    },
+    "Buy me a coffee" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bana bir kahve ısmarla"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vazgeç"
+          }
+        }
+      }
+    },
+    "Changes from a previous session are still applied" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Önceki oturumdan kalan değişiklikler hâlâ uygulanıyor"
+          }
+        }
+      }
+    },
+    "Contact number on lock screen" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kilit ekranında iletişim numarası"
+          }
+        }
+      }
+    },
+    "Deactivate" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Devre Dışı Bırak"
+          }
+        }
+      }
+    },
+    "Donate the developer if you liked this app" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uygulamayı beğendiyseniz geliştiriciye bağış yapın"
+          }
+        }
+      }
+    },
+    "Enable alarm on lid close" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kapak kapanınca alarmı etkinleştir"
+          }
+        }
+      }
+    },
+    "Enable alarm on power off" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Güç kesilince alarmı etkinleştir"
+          }
+        }
+      }
+    },
+    "Headphones are connected" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kulaklık bağlı"
+          }
+        }
+      }
+    },
+    "Lid close detection" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kapak kapanma algılama"
+          }
+        }
+      }
+    },
+    "Lid sleep disabled" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kapak uykusu devre dışı"
+          }
+        }
+      }
+    },
+    "Lid sleep not disabled" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kapak uykusu devre dışı değil"
+          }
+        }
+      }
+    },
+    "Lock screen & alarm:" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kilit ekranı ve alarm:"
+          }
+        }
+      }
+    },
+    "Lock screen warning" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kilit ekranı uyarısı"
+          }
+        }
+      }
+    },
+    "Power disconnect detection" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Güç bağlantısı kesilme algılama"
+          }
+        }
+      }
+    },
+    "Proceed anyway" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yine de devam et"
+          }
+        }
+      }
+    },
+    "Protect your MacBook from theft" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MacBook'unuzu hırsızlığa karşı koruyun"
+          }
+        }
+      }
+    },
+    "Protection Active" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koruma Etkin"
+          }
+        }
+      }
+    },
+    "Requires admin permission" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yönetici izni gerektirir"
+          }
+        }
+      }
+    },
+    "Reset System State" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sistem Durumunu Sıfırla"
+          }
+        }
+      }
+    },
+    "Reset system state" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sistem durumunu sıfırla"
+          }
+        }
+      }
+    },
+    "Restores the wallpaper, lid sleep and audio output if they were left changed (e.g. after a forced shutdown)" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değiştirilmiş kaldıysa duvar kağıdını, kapak uykusunu ve ses çıkışını geri yükler (ör. zorla kapatma sonrası)"
+          }
+        }
+      }
+    },
+    "Select at least one option to activate" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etkinleştirmek için en az bir seçenek seçin"
+          }
+        }
+      }
+    },
+    "Show contact number" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İletişim numarasını göster"
+          }
+        }
+      }
+    },
+    "Show warning on lock screen" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kilit ekranında uyarı göster"
+          }
+        }
+      }
+    },
+    "The alarm may not be audible through the speakers." : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarm hoparlörlerden duyulmayabilir."
+          }
+        }
+      }
+    },
+    "The alarm may not be audible through the speakers.\nCurrent output: %@" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarm hoparlörlerden duyulmayabilir.\nGeçerli çıkış: %@"
+          }
+        }
+      }
+    },
+    "Thief can close the alarm by closing lid" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hırsız kapağı kapatarak alarmı susturabilir"
+          }
+        }
+      }
+    },
+    "Unplug Alarm" : {
+      "shouldTranslate" : false
+    },
+    "Used for the lock screen text and the voice warning" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kilit ekranı metni ve sesli uyarı için kullanılır"
+          }
+        }
+      }
+    },
+    "Voice warning (%@)" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sesli uyarı (%@)"
+          }
+        }
+      }
+    },
+    "Voice warning when alarm triggers" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarm çalınca sesli uyarı"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
