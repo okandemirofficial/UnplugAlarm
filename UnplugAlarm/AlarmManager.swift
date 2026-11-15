@@ -29,6 +29,8 @@ class AlarmManager: ObservableObject {
     private var beepTimer: Timer?
     private var volumeEnforcerTimer: Timer?
 
+    private let audioOutput = AudioOutputManager()
+
     private var terminationObserver: NSObjectProtocol?
 
     init() {
@@ -87,6 +89,9 @@ class AlarmManager: ObservableObject {
         // Lock the screen
         lockScreen()
 
+        // Keep the alarm on the built-in speakers if the output changes while active
+        audioOutput.startMonitoring()
+
         // Start monitoring based on user selection
         if alarmOnPowerOff {
             startPowerMonitoring()
@@ -110,6 +115,9 @@ class AlarmManager: ObservableObject {
         stopPowerMonitoring()
         stopLidMonitoring()
         stopScreenStateMonitoring()
+
+        audioOutput.stopMonitoring()
+        audioOutput.restoreOriginalOutput()
 
         // Restore lid sleep if it was disabled
         if isLidSleepDisabled {
@@ -429,6 +437,9 @@ class AlarmManager: ObservableObject {
         preventSleep()
 
         isAlarmPlaying = true
+
+        // Make sure the alarm comes out of the speakers, not headphones
+        audioOutput.forceBuiltInOutput()
 
         // Force volume to max and keep it there
         startVolumeEnforcer()

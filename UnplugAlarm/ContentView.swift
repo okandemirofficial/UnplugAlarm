@@ -9,9 +9,21 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var alarmManager = AlarmManager()
+    @State private var showHeadphoneAlert = false
+    @State private var currentOutputName: String?
 
     var canActivate: Bool {
         alarmManager.alarmOnPowerOff || alarmManager.alarmOnLidClose
+    }
+
+    /// Asks before locking if the alarm would not play through the internal speakers.
+    private func activateTapped() {
+        if AudioOutputManager.isDefaultOutputInternalSpeaker() {
+            alarmManager.activate()
+        } else {
+            currentOutputName = AudioOutputManager.defaultOutputName()
+            showHeadphoneAlert = true
+        }
     }
 
     var body: some View {
@@ -127,9 +139,7 @@ struct ContentView: View {
                 .background(Color.gray.opacity(0.1))
                 .cornerRadius(12)
 
-                Button(action: {
-                    alarmManager.activate()
-                }) {
+                Button(action: activateTapped) {
                     Text("Activate")
                         .font(.title2)
                         .fontWeight(.bold)
@@ -140,6 +150,18 @@ struct ContentView: View {
                 }
                 .buttonStyle(.plain)
                 .disabled(!canActivate)
+                .alert("Headphones are connected", isPresented: $showHeadphoneAlert) {
+                    Button("Cancel", role: .cancel) {}
+                    Button("Proceed anyway") {
+                        alarmManager.activate()
+                    }
+                } message: {
+                    if let name = currentOutputName {
+                        Text("The alarm may not be audible through the speakers.\nCurrent output: \(name)")
+                    } else {
+                        Text("The alarm may not be audible through the speakers.")
+                    }
+                }
 
                 if !canActivate {
                     Text("Select at least one option to activate")
