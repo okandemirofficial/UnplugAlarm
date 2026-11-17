@@ -43,6 +43,10 @@ struct ContentView: View {
                     if alarmManager.alarmOnPowerOff {
                         Label("Power disconnect detection", systemImage: "checkmark.circle.fill")
                             .foregroundStyle(.green)
+                        if settings.stopAlarmOnReconnect {
+                            Label("Alarm stops when power is reconnected", systemImage: "info.circle.fill")
+                                .foregroundStyle(.secondary)
+                        }
                     }
                     if alarmManager.alarmOnLidClose {
                         Label("Lid close detection", systemImage: "checkmark.circle.fill")
@@ -109,6 +113,13 @@ struct ContentView: View {
                         }
                     }
                     .toggleStyle(.checkbox)
+
+                    Toggle(isOn: $settings.stopAlarmOnReconnect) {
+                        Text("Stop alarm when power is reconnected")
+                    }
+                    .toggleStyle(.checkbox)
+                    .padding(.leading, 20)
+                    .disabled(!alarmManager.alarmOnPowerOff)
 
                     // Lid close checkbox
                     Toggle(isOn: $alarmManager.alarmOnLidClose) {

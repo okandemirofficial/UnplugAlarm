@@ -31,6 +31,16 @@
         }
       }
     },
+    "Alarm stops when power is reconnected" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Güç yeniden bağlanınca alarm durur"
+          }
+        }
+      }
+    },
     "Alarm triggers:" : {
       "localizations" : {
         "tr" : {
@@ -287,6 +297,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kilit ekranında uyarı göster"
+          }
+        }
+      }
+    },
+    "Stop alarm when power is reconnected" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Güç yeniden bağlanınca alarmı durdur"
           }
         }
       }

@@ -110,6 +110,7 @@ final class AlarmSettings: ObservableObject {
         static let contactNumber = "contactNumber"
         static let voiceWarning = "voiceWarning"
         static let alarmLanguage = "alarmLanguage"
+        static let stopAlarmOnReconnect = "stopAlarmOnReconnect"
     }
 
     private let defaults = UserDefaults.standard
@@ -137,6 +138,12 @@ final class AlarmSettings: ObservableObject {
         didSet { defaults.set(voiceWarning, forKey: Key.voiceWarning) }
     }
 
+    /// Stop a power-triggered alarm when the charger is plugged back in
+    /// (e.g. a short power cut or an accidental unplug).
+    @Published var stopAlarmOnReconnect: Bool {
+        didSet { defaults.set(stopAlarmOnReconnect, forKey: Key.stopAlarmOnReconnect) }
+    }
+
     @Published var alarmLanguage: AlarmLanguage {
         didSet { defaults.set(alarmLanguage.rawValue, forKey: Key.alarmLanguage) }
     }
@@ -146,11 +153,13 @@ final class AlarmSettings: ObservableObject {
             Key.showLockScreenWarning: true,
             Key.showContactNumber: true,
             Key.voiceWarning: true,
+            Key.stopAlarmOnReconnect: true,
         ])
         showLockScreenWarning = defaults.bool(forKey: Key.showLockScreenWarning)
         showContactNumber = defaults.bool(forKey: Key.showContactNumber)
         contactNumber = AlarmSettings.sanitizeContactNumber(defaults.string(forKey: Key.contactNumber) ?? "")
         voiceWarning = defaults.bool(forKey: Key.voiceWarning)
+        stopAlarmOnReconnect = defaults.bool(forKey: Key.stopAlarmOnReconnect)
         alarmLanguage = defaults.string(forKey: Key.alarmLanguage).flatMap(AlarmLanguage.init(rawValue:))
             ?? AlarmLanguage.systemDefault
     }

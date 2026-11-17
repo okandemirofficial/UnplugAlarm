@@ -40,6 +40,10 @@ class AlarmManager: ObservableObject {
     private var voiceTimer: Timer?
     private var isSirenPaused = false
     private var isScreenLocked = false
+    /// What caused the current alarm. A reconnect only stops an alarm that
+    /// was triggered by unplugging alone (never one caused by closing the lid).
+    private var alarmTriggeredByPower = false
+    private var alarmTriggeredByLid = false
     /// Alarm language captured when the alarm triggers.
     private var alarmLanguage: AlarmLanguage = .english
 
@@ -356,6 +360,7 @@ class AlarmManager: ObservableObject {
 
         // Trigger alarm if lid just closed (was open, now closed)
         if wasLidOpen && isCurrentlyLidClosed {
+            alarmTriggeredByLid = true
             triggerAlarm()
         }
 
@@ -399,7 +404,19 @@ class AlarmManager: ObservableObject {
 
         // Trigger alarm if unplugged (was plugged, now not)
         if wasPluggedIn && !isCurrentlyPluggedIn {
+            alarmTriggeredByPower = true
             triggerAlarm()
+        }
+
+        // Stop the alarm if the charger is plugged back in (setting, default on).
+        // Protection stays active, so unplugging again re-triggers it.
+        if !wasPluggedIn && isCurrentlyPluggedIn
+            && isAlarmPlaying && alarmTriggeredByPower && !alarmTriggeredByLid
+            && settings.stopAlarmOnReconnect {
+            stopAlarm()
+            if isScreenLocked {
+                showProtectedWallpaperIfEnabled()
+            }
         }
 
         wasPluggedIn = isCurrentlyPluggedIn
@@ -544,6 +561,8 @@ class AlarmManager: ObservableObject {
 
     func stopAlarm() {
         isAlarmPlaying = false
+        alarmTriggeredByPower = false
+        alarmTriggeredByLid = false
         voiceTimer?.invalidate()
         voiceTimer = nil
         voice.stop()
